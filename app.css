@@ -1,0 +1,8 @@
+body, body > * {
+  background-image: none !important;
+}
+
+body > *, body > * > *, body > * > * > * {
+  background: rgba(255, 255, 255, 0.5) !important;
+  padding: 4px !important;
+}

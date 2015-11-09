@@ -1,0 +1,34 @@
+{
+  "resources": {
+    "head": [
+      {
+        "type": "script",
+        "src": "./app.js"
+      },
+      {
+        "type": "style",
+        "src": "./app.css"
+      }
+    ]
+  },
+  "preview": {
+    "handlers": [
+      {
+        "options": ["*"],
+        "execute": "EagerExampleNoUI.setOptions(INSTALL_OPTIONS)"
+      }
+    ]
+  },
+  "options": {
+    "properties": {
+      "color": {
+        "title": "Background Color",
+        "description": "What color would you like the background of the page to have?",
+        "order": 1,
+        "type": "string",
+        "format": "color",
+        "default": "#e90f92"
+      }
+    }
+  }
+}
