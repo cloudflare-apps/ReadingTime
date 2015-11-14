@@ -6,7 +6,7 @@
   // NOTE: I'm unclear why this is necessary. Checking docs...
   // Random thought, how does Eager separate INSTALL_OPTIONS for multiple apps?
   let options = INSTALL_OPTIONS
-  let el
+  let element
   let rendering = false
   let observer
   let opacityTimeout
@@ -36,8 +36,10 @@
 
 
   function getScrollBarPosition() {
-    // Approximate center of Chrome's scrollbar.
-    const offset = d.body.clientHeight < 9000 ? 20 : 0
+    // TODO: Clean up calculation for approximate center of Chrome's scrollbar.
+    let offset = d.documentElement.clientHeight / d.body.clientHeight * d.documentElement.clientHeight / 4
+
+    if (offset < element.clientHeight / 4) offset = 0
 
     return d.body.scrollTop / d.body.clientHeight * d.documentElement.clientHeight + offset
   }
@@ -58,35 +60,35 @@
 
     const distance = getScrollBarPosition()
 
-    el.style.transform = "translateY(" + distance + "px)"
-    el.style.opacity = 1
+    element.style.transform = "translateY(" + distance + "px)"
+    element.style.opacity = 1
 
-    opacityTimeout = setTimeout(() => { el.style.opacity = 0 }, options.visibleDuration)
+    opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, options.visibleDuration)
 
     const {minutes, wordCount} = getTextEstimates(target.innerText, getScrollPercentage(target))
 
     if (minutes === 0) {
-      el.innerText = "Finished"
+      element.innerText = "Finished"
     }
     else if (wordCount < options.wordsPerMinute || minutes < 1) {
-      el.innerText = "A few seconds"
+      element.innerText = "A few seconds"
     }
     else {
       const roundedMinutes = Math.round(minutes)
 
-      el.innerText = roundedMinutes > 1 ? roundedMinutes + " minutes left" : "1 minute left"
+      element.innerText = roundedMinutes > 1 ? roundedMinutes + " minutes left" : "1 minute left"
     }
 
     rendering = false
   }
 
   function updateElement() {
-    if (el && el.parentNode) el.parentNode.removeChild(el)
+    if (element && element.parentNode) element.parentNode.removeChild(element)
 
-    el = d.createElement("div")
-    el.className = "eager-reading-time"
+    element = d.createElement("div")
+    element.className = "eager-reading-time"
 
-    d.body.appendChild(el)
+    d.body.appendChild(element)
 
     observer && observer.disconnect()
     window.removeEventListener("scroll", render, true)
