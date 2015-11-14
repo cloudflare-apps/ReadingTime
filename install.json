@@ -15,19 +15,32 @@
     "handlers": [
       {
         "options": ["*"],
-        "execute": "EagerExampleNoUI.setOptions(INSTALL_OPTIONS)"
+        "execute": "EagerReadingTime.setOptions(INSTALL_OPTIONS)"
       }
     ]
   },
   "options": {
     "properties": {
-      "color": {
-        "title": "Background Color",
-        "description": "What color would you like the background of the page to have?",
+      "wordsPerMinute": {
+        "title": "Words Per Minute",
+        "type": "integer",
+        "default": 250
+      },
+      "visibleDuration": {
+        "title": "Visible Duration (milliseconds)",
+        "type": "integer",
+        "default": 800
+      },
+      "element": {
+        "title": "Location",
+        "description": "Where would you like the view counter to appear?",
         "order": 1,
-        "type": "string",
-        "format": "color",
-        "default": "#e90f92"
+        "type": "object",
+        "format": "element",
+        "default": {
+          "selector": ".article-body__content",
+          "method": "before"
+        }
       }
     }
   }

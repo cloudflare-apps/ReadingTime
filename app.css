@@ -1,8 +1,13 @@
-body, body > * {
-  background-image: none !important;
-}
-
-body > *, body > * > *, body > * > * > * {
-  background: rgba(255, 255, 255, 0.5) !important;
-  padding: 4px !important;
+.eager-reading-time {
+  background: #222;
+  border-radius: 5px;
+  color: white;
+  line-height: 1;
+  padding: 5px 10px;
+  position: fixed;
+  opacity: 0;
+  right: 10px;
+  top: 0;
+  transition: opacity 150ms linear;
+  z-index: 999999;
 }

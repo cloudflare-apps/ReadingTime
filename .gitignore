@@ -1,0 +1,15 @@
+# Garbage
+.DS_Store
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+*.log
+/tmp
+/dist/**/*
+node_modules/**/*
+
+# Credentials.
+config/aws.json
+
