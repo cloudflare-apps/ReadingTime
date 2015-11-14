@@ -2,10 +2,12 @@
   "env": {
     "browser": true
   },
+  "extends": "eslint:recommended",
   "globals": {
     "INSTALL_OPTIONS": false
   },
-  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
+  "plugins": [],
   "rules": {
     "array-bracket-spacing": [1, "never"],
     "arrow-parens": [1, "as-needed"],
@@ -102,9 +104,11 @@
     "no-use-before-define": 2,
     "no-useless-call": 1,
     "no-useless-concat": 1,
+    "no-var": 2,
     "no-void": 1,
     "no-with": 2,
     "object-curly-spacing": [1, "never"],
+    "object-shorthand": [1, "always"],
     "one-var": [1, {
       "let": "never",
       "const": "never"
@@ -112,6 +116,7 @@
     "operator-assignment": [1, "always"],
     "operator-linebreak": [1, "after"],
     "padded-blocks": [1, "never"],
+    "prefer-arrow-callback": 1,
     "prefer-const": 2,
     "prefer-reflect": 1,
     "prefer-spread": 1,

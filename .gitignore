@@ -7,7 +7,6 @@
 # Ignore all logfiles and tempfiles.
 *.log
 /tmp
-/dist/**/*
 node_modules/**/*
 
 # Credentials.

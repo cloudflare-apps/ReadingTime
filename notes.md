@@ -12,6 +12,9 @@ What `Eager.createElement`'s optional argument `previousElement` for?
 
 - I wish I could set a property in install.json to run the app through Babel.
 
+- I wish I could have element properties without a choice of insertion position.
+It'd be like a string property that lets the user click which element is used for reading estimates.
+
 - The initial load vs update flow with `setOptions` feels awkward.
 My initial thought is that I'd prefer if `update` received `INSTALL_OPTIONS` as an parameter.
 

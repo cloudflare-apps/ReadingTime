@@ -3,11 +3,11 @@
     "head": [
       {
         "type": "script",
-        "src": "./app.js"
+        "src": "./dist/app.js"
       },
       {
         "type": "style",
-        "src": "./app.css"
+        "src": "./dist/app.css"
       }
     ]
   },

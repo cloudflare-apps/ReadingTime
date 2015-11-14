@@ -4,7 +4,8 @@
   "description": "This is an example app for [Eager](https://eager.io).",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel --watch --out-dir dist app.js",
+    "build": "NODE_ENV=production babel --out-dir dist app.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,14 @@
     "url": "https://github.com/TeffenEllis/reading-time/issues"
   },
   "homepage": "https://github.com/TeffenEllis/reading-time#readme",
+  "dependencies": {
+    "babel-runtime": "^5.8.29"
+  },
   "devDependencies": {
-    "eslint": "^1.9.0"
+    "babel": "^5.8.29",
+    "babel-core": "^5.8.29",
+    "babel-eslint": "4.1.3",
+    "babel-runtime": "^5.4.7",
+    "eslint": "1.9.0"
   }
 }
