@@ -58,9 +58,7 @@
     rendering = true
     clearTimeout(opacityTimeout)
 
-    const distance = getScrollBarPosition()
-
-    element.style.transform = "translateY(" + distance + "px)"
+    element.style.transform = `translateY(${getScrollBarPosition()}px)`
     element.style.opacity = 1
 
     opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, options.visibleDuration)

@@ -58,9 +58,7 @@
     rendering = true;
     clearTimeout(opacityTimeout);
 
-    var distance = getScrollBarPosition();
-
-    element.style.transform = "translateY(" + distance + "px)";
+    element.style.transform = "translateY(" + getScrollBarPosition() + "px)";
     element.style.opacity = 1;
 
     opacityTimeout = setTimeout(function () {
