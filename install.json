@@ -26,7 +26,7 @@
         "description": "On which part of the screen should the scroll progress appear?",
         "type": "string",
         "order": 0,
-        "default": "center",
+        "default": "center-bottom",
         "enum": ["left-top", "left-bottom", "center-top", "center-bottom", "right-top", "right-bottom"],
         "enumNames": {
           "left-top": "Left Top",
