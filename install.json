@@ -23,7 +23,7 @@
     "properties": {
       "position": {
         "title": "Position",
-        "description": "On which part of the screen should the scroll progress appear?",
+        "description": "On which part of the screen should the reading time appear?",
         "type": "string",
         "order": 0,
         "default": "center-bottom",
@@ -39,7 +39,7 @@
       },
       "visibleDuration": {
         "title": "Hide Speed",
-        "description": "How quickly should the scroll progress be hidden when the user stops scrolling?",
+        "description": "How quickly should the reading time be hidden when the user stops scrolling?",
         "type": "string",
         "order": 1,
         "default": "500",
@@ -53,7 +53,7 @@
         }
       },
       "showBackground": {
-        "title": "Show a background color behind the scroll progress text?",
+        "title": "Show a background color behind the reading time?",
         "type": "boolean",
         "default": true,
         "order": 2
@@ -68,7 +68,7 @@
       },
       "localize": {
         "title": "Set custom text",
-        "description": "Would you like to write your own custom messages? Particularly useful if you’d like to localize Reading Time.",
+        "description": "Particularly useful if you’d like to localize Reading Time.",
         "type": "boolean",
         "order": 4
       },
