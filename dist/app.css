@@ -1,24 +1,40 @@
 .eager-reading-time {
-  background: #222;
-  border-radius: 5px;
-  color: white;
-  line-height: 1;
-  padding: 5px 10px;
   position: fixed;
   opacity: 0;
-  right: 20px;
-  top: 0;
-  transition: opacity 150ms linear;
+  transition: opacity 150ms ease-in-out;
   z-index: 999999;
+  text-align: left;
+  pointer-events: none;
 }
 
-.eager-reading-time:after {
-  border-color: transparent transparent transparent #222;
-  border-style: solid;
-  border-width: 7.5px 0 7.5px 13.0px;
-  content: "";
-  height: 0;
-  left: calc(100% - 2px);
-  position: absolute;
-  width: 0;
+.eager-reading-time-left-top, .eager-reading-time-center-top, .eager-reading-time-right-top {
+  top: 0;
+}
+
+.eager-reading-time-left-bottom, .eager-reading-time-center-bottom, .eager-reading-time-right-bottom {
+  bottom: 0;
+}
+
+.eager-reading-time-left-top, .eager-reading-time-left-bottom {
+  left: 0;
+}
+
+.eager-reading-time-right-top, .eager-reading-time-right-bottom {
+  right: 0;
+}
+
+.eager-reading-time-center-top, .eager-reading-time-center-bottom {
+  text-align: center;
+  left: 0;
+  width: 100%;
+}
+
+.eager-reading-time > div {
+  padding: 1em 1.5em;
+  background-color: inherit;
+}
+
+.eager-reading-time-left-top > div, .eager-reading-time-left-bottom > div,
+.eager-reading-time-right-top > div, .eager-reading-time-right-bottom > div {
+  display: inline-block;
 }
