@@ -62,7 +62,7 @@
       }, +options.visibleDuration);
     }
 
-    var _getTextEstimates = getTextEstimates(target.innerText, getScrollPercentage(target));
+    var _getTextEstimates = getTextEstimates(target.textContent, getScrollPercentage(target));
 
     var minutes = _getTextEstimates.minutes;
     var wordCount = _getTextEstimates.wordCount;
@@ -89,7 +89,7 @@
     }
 
     if (template) {
-      textContainer.innerText = template.replace(/\$MINUTES/g, roundedMinutes);
+      textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes);
     } else {
       element.style.opacity = 0;
     }

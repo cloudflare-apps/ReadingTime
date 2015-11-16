@@ -60,7 +60,7 @@
       opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, +options.visibleDuration)
     }
 
-    const {minutes, wordCount} = getTextEstimates(target.innerText, getScrollPercentage(target))
+    const {minutes, wordCount} = getTextEstimates(target.textContent, getScrollPercentage(target))
 
     let strings = options.strings;
     if (!strings || !options.localize){
@@ -89,7 +89,7 @@
     }
 
     if (template){
-      textContainer.innerText = template.replace(/\$MINUTES/g, roundedMinutes);
+      textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes);
     } else {
       element.style.opacity = 0
     }
