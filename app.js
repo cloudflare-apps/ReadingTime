@@ -33,16 +33,6 @@
     return Math.min(scrollPercentage, 1)
   }
 
-
-  function getScrollBarPosition() {
-    // TODO: Clean up calculation for approximate center of Chrome's scrollbar.
-    let offset = d.documentElement.clientHeight / d.body.clientHeight * d.documentElement.clientHeight / 4
-
-    if (offset < element.clientHeight / 4) offset = 0
-
-    return d.body.scrollTop / d.body.clientHeight * d.documentElement.clientHeight + offset
-  }
-
   function getTextEstimates(text, percentageRead) {
     const spaces = text.match(/\s+/g)
     const wordCount = spaces ? spaces.length : 0
@@ -56,14 +46,15 @@
 
     element.style.opacity = 1
 
-    if (options.visibleDuration !== "-1"){
+    if (options.visibleDuration !== "-1") {
       opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, +options.visibleDuration)
     }
 
     const {minutes, wordCount} = getTextEstimates(target.textContent, getScrollPercentage(target))
 
-    let strings = options.strings;
-    if (!strings || !options.localize){
+    let strings = options.strings
+
+    if (!strings || !options.localize) {
       strings = {
         finished: "",
         lessThanAMinute: "A few seconds left",
@@ -82,15 +73,13 @@
       template = strings.lessThanAMinute
     }
     else {
-      if (roundedMinutes === 1)
-        template = strings.oneMinute
-      else
-        template = strings.manyMinutes
+      template = roundedMinutes === 1 ? strings.oneMinute : strings.manyMinutes
     }
 
-    if (template){
-      textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes);
-    } else {
+    if (template) {
+      textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes)
+    }
+    else {
       element.style.opacity = 0
     }
   }
@@ -99,14 +88,13 @@
     if (element && element.parentNode) element.parentNode.removeChild(element)
 
     element = d.createElement("eager-app")
-    element.className = 'eager-reading-time'
-    element.setAttribute('data-position', options.position)
+    element.className = "eager-reading-time"
+    element.setAttribute("data-position", options.position)
 
     textContainer = d.createElement("div")
     element.appendChild(textContainer)
 
-    if (options.showBackground)
-      textContainer.style.backgroundColor = options.backgroundColor;
+    if (options.showBackground) textContainer.style.backgroundColor = options.backgroundColor
 
     d.body.appendChild(element)
 
@@ -131,7 +119,8 @@
 
         return observer.observe(d.body, {childList: true})
       }
-    } else {
+    }
+    else {
       target = document.body
     }
 

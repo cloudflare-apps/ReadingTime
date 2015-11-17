@@ -34,15 +34,6 @@
     return Math.min(scrollPercentage, 1);
   }
 
-  function getScrollBarPosition() {
-    // TODO: Clean up calculation for approximate center of Chrome's scrollbar.
-    var offset = d.documentElement.clientHeight / d.body.clientHeight * d.documentElement.clientHeight / 4;
-
-    if (offset < element.clientHeight / 4) offset = 0;
-
-    return d.body.scrollTop / d.body.clientHeight * d.documentElement.clientHeight + offset;
-  }
-
   function getTextEstimates(text, percentageRead) {
     var spaces = text.match(/\s+/g);
     var wordCount = spaces ? spaces.length : 0;
@@ -68,6 +59,7 @@
     var wordCount = _getTextEstimates.wordCount;
 
     var strings = options.strings;
+
     if (!strings || !options.localize) {
       strings = {
         finished: "",
@@ -85,7 +77,7 @@
     } else if (wordCount < wordsPerMinute || minutes < 1) {
       template = strings.lessThanAMinute;
     } else {
-      if (roundedMinutes === 1) template = strings.oneMinute;else template = strings.manyMinutes;
+      template = roundedMinutes === 1 ? strings.oneMinute : strings.manyMinutes;
     }
 
     if (template) {
@@ -99,8 +91,8 @@
     if (element && element.parentNode) element.parentNode.removeChild(element);
 
     element = d.createElement("eager-app");
-    element.className = 'eager-reading-time';
-    element.setAttribute('data-position', options.position);
+    element.className = "eager-reading-time";
+    element.setAttribute("data-position", options.position);
 
     textContainer = d.createElement("div");
     element.appendChild(textContainer);
