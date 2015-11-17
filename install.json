@@ -26,15 +26,15 @@
         "description": "On which part of the screen should the reading time appear?",
         "type": "string",
         "order": 0,
-        "default": "center-bottom",
-        "enum": ["left-top", "left-bottom", "center-top", "center-bottom", "right-top", "right-bottom"],
+        "default": "center bottom",
+        "enum": ["left top", "left bottom", "center top", "center bottom", "right top", "right bottom"],
         "enumNames": {
-          "left-top": "Left Top",
-          "left-bottom": "Left Bottom",
-          "center-top": "Center Top",
-          "center-bottom": "Center Bottom",
-          "right-top": "Right Top",
-          "right-bottom": "Right Bottom"
+          "left top": "Left Top",
+          "left bottom": "Left Bottom",
+          "center top": "Center Top",
+          "center bottom": "Center Bottom",
+          "right top": "Right Top",
+          "right bottom": "Right Bottom"
         }
       },
       "visibleDuration": {

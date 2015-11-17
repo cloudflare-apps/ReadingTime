@@ -99,7 +99,8 @@
     if (element && element.parentNode) element.parentNode.removeChild(element);
 
     element = d.createElement("eager-app");
-    element.className = "eager-reading-time eager-reading-time-" + options.position;
+    element.className = 'eager-reading-time';
+    element.setAttribute('data-position', options.position);
 
     textContainer = d.createElement("div");
     element.appendChild(textContainer);
