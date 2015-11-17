@@ -75,6 +75,7 @@
       "strings": {
         "title": "Text",
         "type": "object",
+        "description": "Clear any phrase to not have that message appear.",
         "order": 5,
         "showIf": "localize",
         "properties": {
