@@ -21,25 +21,110 @@
   },
   "options": {
     "properties": {
-      "wordsPerMinute": {
-        "title": "Words Per Minute",
-        "type": "integer",
-        "default": 250
+      "position": {
+        "title": "Position",
+        "description": "On which part of the screen should the reading time appear?",
+        "type": "string",
+        "order": 0,
+        "default": "center bottom",
+        "enum": ["left top", "left bottom", "center top", "center bottom", "right top", "right bottom"],
+        "enumNames": {
+          "left top": "Left Top",
+          "left bottom": "Left Bottom",
+          "center top": "Center Top",
+          "center bottom": "Center Bottom",
+          "right top": "Right Top",
+          "right bottom": "Right Bottom"
+        }
       },
       "visibleDuration": {
-        "title": "Visible Duration (milliseconds)",
-        "type": "integer",
-        "default": 800
-      },
-      "element": {
-        "title": "Location",
-        "description": "Where would you like the view counter to appear?",
+        "title": "Hide Speed",
+        "description": "How quickly should the reading time be hidden when the user stops scrolling?",
+        "type": "string",
         "order": 1,
+        "default": "500",
+        "enum": ["200", "500", "1000", "2000", "-1"],
+        "enumNames": {
+          "200": "Very Fast",
+          "500": "Fast",
+          "1000": "Slow",
+          "2000": "Very Slow",
+          "-1": "Never Hide"
+        }
+      },
+      "showBackground": {
+        "title": "Show a background color behind the reading time?",
+        "type": "boolean",
+        "default": true,
+        "order": 2
+      },
+      "backgroundColor": {
+        "title": "Background color",
+        "type": "string",
+        "format": "color",
+        "default": "#FFFFFF",
+        "showIf": "showBackground",
+        "order": 3
+      },
+      "localize": {
+        "title": "Set custom text",
+        "description": "Particularly useful if you’d like to localize Reading Time.",
+        "type": "boolean",
+        "order": 4
+      },
+      "strings": {
+        "title": "Text",
         "type": "object",
-        "format": "element",
-        "default": {
-          "selector": ".article-body__content",
-          "method": "before"
+        "description": "Clear any phrase to not have that message appear.",
+        "order": 5,
+        "showIf": "localize",
+        "properties": {
+          "finished": {
+            "order": 1,
+            "type": "string",
+            "title": "Finished text",
+            "default": ""
+          },
+          "lessThanAMinute": {
+            "order": 2,
+            "type": "string",
+            "title": "Less than a minute remaining text",
+            "default": "A few seconds left"
+          },
+          "oneMinute": {
+            "order": 3,
+            "type": "string",
+            "title": "One minute remaining text",
+            "default": "1 minute left"
+          },
+          "manyMinutes": {
+            "order": 4,
+            "type": "string",
+            "title": "Many minutes remaining text",
+            "description": "‘$MINUTES’ will be replaced with the number of minutes remaining",
+            "default": "$MINUTES minutes left"
+          }
+        }
+      },
+      "advancedOptionsToggle": {
+        "title": "Show advanced options",
+        "type": "boolean",
+        "order": 6
+      },
+      "advancedOptions": {
+        "title": "Advanced Options",
+        "type": "object",
+        "order": 7,
+        "showIf": "advancedOptionsToggle",
+        "properties": {
+          "element": {
+            "title": "Location",
+            "description": "Select an alternative scrollable area for the reading time message to appear inside",
+            "order": 1,
+            "type": "string",
+            "format": "selector",
+            "default": "body"
+          }
         }
       }
     }

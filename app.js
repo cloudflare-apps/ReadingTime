@@ -2,12 +2,11 @@
   if (!window.addEventListener) return
 
   const d = document
+  const wordsPerMinute = 250
 
-  // NOTE: I'm unclear why this is necessary. Checking docs...
-  // Random thought, how does Eager separate INSTALL_OPTIONS for multiple apps?
   let options = INSTALL_OPTIONS
   let element
-  let rendering = false
+  let textContainer
   let observer
   let opacityTimeout
   let target
@@ -47,75 +46,99 @@
   function getTextEstimates(text, percentageRead) {
     const spaces = text.match(/\s+/g)
     const wordCount = spaces ? spaces.length : 0
-    const minutes = wordCount / options.wordsPerMinute * (1 - percentageRead)
+    const minutes = wordCount / wordsPerMinute * (1 - percentageRead)
 
     return {minutes, wordCount}
   }
 
   function render() {
-    if (rendering) return
-
-    rendering = true
     clearTimeout(opacityTimeout)
 
-    element.style.transform = `translateY(${getScrollBarPosition()}px)`
     element.style.opacity = 1
 
-    opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, options.visibleDuration)
+    if (options.visibleDuration !== "-1"){
+      opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, +options.visibleDuration)
+    }
 
-    const {minutes, wordCount} = getTextEstimates(target.innerText, getScrollPercentage(target))
+    const {minutes, wordCount} = getTextEstimates(target.textContent, getScrollPercentage(target))
+
+    let strings = options.strings;
+    if (!strings || !options.localize){
+      strings = {
+        finished: "",
+        lessThanAMinute: "A few seconds left",
+        oneMinute: "1 minute left",
+        manyMinutes: "$MINUTES minutes left"
+      }
+    }
+
+    const roundedMinutes = Math.round(minutes)
+    let template
 
     if (minutes === 0) {
-      element.innerText = "Finished"
+      template = strings.finished
     }
-    else if (wordCount < options.wordsPerMinute || minutes < 1) {
-      element.innerText = "A few seconds"
+    else if (wordCount < wordsPerMinute || minutes < 1) {
+      template = strings.lessThanAMinute
     }
     else {
-      const roundedMinutes = Math.round(minutes)
-
-      element.innerText = roundedMinutes > 1 ? roundedMinutes + " minutes left" : "1 minute left"
+      if (roundedMinutes === 1)
+        template = strings.oneMinute
+      else
+        template = strings.manyMinutes
     }
 
-    rendering = false
+    if (template){
+      textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes);
+    } else {
+      element.style.opacity = 0
+    }
   }
 
   function updateElement() {
     if (element && element.parentNode) element.parentNode.removeChild(element)
 
-    element = d.createElement("div")
-    element.className = "eager-reading-time"
+    element = d.createElement("eager-app")
+    element.className = 'eager-reading-time'
+    element.setAttribute('data-position', options.position)
+
+    textContainer = d.createElement("div")
+    element.appendChild(textContainer)
+
+    if (options.showBackground)
+      textContainer.style.backgroundColor = options.backgroundColor;
 
     d.body.appendChild(element)
 
     observer && observer.disconnect()
-    window.removeEventListener("scroll", render, true)
+    window.removeEventListener("scroll", render)
+    window.removeEventListener("resize", render)
   }
 
   function update() {
     updateElement()
 
-    const {selector} = options.element
+    const selector = options.advancedOptions && options.advancedOptions.element
 
-    target = d.querySelector(selector)
+    if (selector && options.advancedOptionsToggle) {
+      target = d.querySelector(selector)
 
-    if (!target) {
-      // Target is not yet in the DOM and is most likely being rendered with JS.
-      observer && observer.disconnect()
+      if (!target) {
+        // Target is not yet in the DOM and is most likely being rendered with JS.
+        observer && observer.disconnect()
 
-      observer = new MutationObserver(() => d.querySelector(selector) && update())
+        observer = new MutationObserver(() => d.querySelector(selector) && update())
 
-      return observer.observe(d.body, {childList: true})
+        return observer.observe(d.body, {childList: true})
+      }
+    } else {
+      target = document.body
     }
 
-    // TODO: Remove after release.
-    target.style.outline = "1px dotted red"
-
-    window.addEventListener("scroll", render, true)
+    window.addEventListener("scroll", render)
+    window.addEventListener("resize", render)
   }
 
-  // NOTE: My first thought was that this was confusing.
-  // The global `INSTALL_OPTIONS` is now out of date?
   function setOptions(nextOptions) {
     options = nextOptions
     update()
@@ -127,8 +150,5 @@
 
   // This is used by the preview to enable live updating of the app while previewing.
   // See the preview.handlers section of the install.json file to see where it's used.
-  // NOTE: This being executed in install.json rubs me the wrong way.
-  //       I'm not yet familar with what goes on behind the scenes,
-  //       but I can imagine this is hard to pull off without globals.
   window.EagerReadingTime = {setOptions}
 }())

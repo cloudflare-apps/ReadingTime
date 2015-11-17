@@ -1,24 +1,55 @@
 .eager-reading-time {
-  background: #222;
-  border-radius: 5px;
-  color: white;
-  line-height: 1;
-  padding: 5px 10px;
-  position: fixed;
   opacity: 0;
-  right: 20px;
-  top: 0;
-  transition: opacity 150ms linear;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 150ms ease-in-out;
+  text-align: left;
   z-index: 999999;
 }
 
-.eager-reading-time:after {
-  border-color: transparent transparent transparent #222;
-  border-style: solid;
-  border-width: 7.5px 0 7.5px 13.0px;
-  content: "";
-  height: 0;
-  left: calc(100% - 2px);
-  position: absolute;
-  width: 0;
+.eager-reading-time[data-position~="top"] {
+  top: 0;
+}
+
+.eager-reading-time[data-position~="bottom"] {
+  bottom: 0;
+}
+
+.eager-reading-time[data-position~="left"] {
+  left: 0;
+}
+
+.eager-reading-time[data-position~="right"] {
+  right: 0;
+}
+
+.eager-reading-time[data-position~="center"] {
+  left: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.eager-reading-time > div {
+  opacity: 0.95;
+  padding: 1em 1.5em;
+}
+
+.eager-reading-time[data-position~="left"] > div, .eager-reading-time[data-position~="right"] > div {
+  display: inline-block;
+}
+
+.eager-reading-time[data-position="left top"] > div {
+  border-bottom-right-radius: .1875em;
+}
+
+.eager-reading-time[data-position="left bottom"] > div {
+  border-top-right-radius: .1875em;
+}
+
+.eager-reading-time[data-position="right top"] > div {
+  border-bottom-left-radius: .1875em;
+}
+
+.eager-reading-time[data-position="right bottom"] > div {
+  border-top-left-radius: .1875em;
 }
