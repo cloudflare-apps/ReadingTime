@@ -28,19 +28,10 @@
     var offsetTop = getOffsetTop(element) - d.documentElement.clientHeight;
     // Consider if the element is beyond the viewport.
     var currentY = Math.max(d.body.scrollTop - offsetTop, 0);
-    var scrollPercentage = currentY / element.clientHeight;
+    var scrollPercentage = currentY / (element.scrollHeight || element.clientHeight);
 
     // Consider if the body is scrolled beyond the element.
     return Math.min(scrollPercentage, 1);
-  }
-
-  function getScrollBarPosition() {
-    // TODO: Clean up calculation for approximate center of Chrome's scrollbar.
-    var offset = d.documentElement.clientHeight / d.body.clientHeight * d.documentElement.clientHeight / 4;
-
-    if (offset < element.clientHeight / 4) offset = 0;
-
-    return d.body.scrollTop / d.body.clientHeight * d.documentElement.clientHeight + offset;
   }
 
   function getTextEstimates(text, percentageRead) {
