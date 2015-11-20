@@ -27,7 +27,7 @@
     const offsetTop = getOffsetTop(element) - d.documentElement.clientHeight
     // Consider if the element is beyond the viewport.
     const currentY = Math.max(d.body.scrollTop - offsetTop, 0)
-    const scrollPercentage = currentY / element.clientHeight
+    const scrollPercentage = currentY / (element.scrollHeight || element.clientHeight)
 
     // Consider if the body is scrolled beyond the element.
     return Math.min(scrollPercentage, 1)
