@@ -57,8 +57,8 @@
 
     var minutes = _getTextEstimates.minutes;
     var wordCount = _getTextEstimates.wordCount;
-
-    var strings = options.strings;
+    var _options = options;
+    var strings = _options.strings;
 
     if (!strings || !options.localize) {
       strings = {

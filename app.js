@@ -52,7 +52,7 @@
 
     const {minutes, wordCount} = getTextEstimates(target.textContent, getScrollPercentage(target))
 
-    let strings = options.strings
+    let {strings} = options
 
     if (!strings || !options.localize) {
       strings = {
