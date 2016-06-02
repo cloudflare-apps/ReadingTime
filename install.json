@@ -119,7 +119,7 @@
         "properties": {
           "element": {
             "title": "Location",
-            "description": "Select an alternative scrollable area for the reading time message to appear inside",
+            "description": "An alternative scrollable area for which to track the reading time",
             "order": 1,
             "type": "string",
             "format": "selector",
