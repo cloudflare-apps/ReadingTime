@@ -101,7 +101,7 @@
             "order": 4,
             "type": "string",
             "title": "Many minutes remaining text",
-            "description": "‘$MINUTES’ will be replaced with the number of minutes remaining",
+            "description": "‘$MINUTES’ will be replaced with the number of minutes remaining.",
             "default": "$MINUTES minutes left"
           }
         }
@@ -119,7 +119,7 @@
         "properties": {
           "element": {
             "title": "Location",
-            "description": "An alternative scrollable area for which to track the reading time",
+            "description": "An alternative scrollable area for which to track the reading time.",
             "order": 1,
             "type": "string",
             "format": "selector",
