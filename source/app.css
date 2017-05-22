@@ -1,4 +1,4 @@
-cloudflare-apps[app="reading-time"] {
+cloudflare-app[app="reading-time"] {
   opacity: 0;
   pointer-events: none;
   position: fixed;
@@ -7,50 +7,51 @@ cloudflare-apps[app="reading-time"] {
   z-index: 999999;
 }
 
-cloudflare-apps[app="reading-time"][data-position~="top"] {
+cloudflare-app[app="reading-time"][data-position~="top"] {
   top: 0;
 }
 
-cloudflare-apps[app="reading-time"][data-position~="bottom"] {
+cloudflare-app[app="reading-time"][data-position~="bottom"] {
   bottom: 0;
 }
 
-cloudflare-apps[app="reading-time"][data-position~="left"] {
+cloudflare-app[app="reading-time"][data-position~="left"] {
   left: 0;
 }
 
-cloudflare-apps[app="reading-time"][data-position~="right"] {
+cloudflare-app[app="reading-time"][data-position~="right"] {
   right: 0;
 }
 
-cloudflare-apps[app="reading-time"][data-position~="center"] {
+cloudflare-app[app="reading-time"][data-position~="center"] {
   left: 0;
   text-align: center;
   width: 100%;
 }
 
-cloudflare-apps[app="reading-time"] > div {
+cloudflare-app[app="reading-time"] > message-container {
+  display: block;
   opacity: 0.95;
   padding: 1em 1.5em;
 }
 
-cloudflare-apps[app="reading-time"][data-position~="left"] > div,
-cloudflare-apps[app="reading-time"][data-position~="right"] > div {
+cloudflare-app[app="reading-time"][data-position~="left"] > message-container,
+cloudflare-app[app="reading-time"][data-position~="right"] > message-container {
   display: inline-block;
 }
 
-cloudflare-apps[app="reading-time"][data-position="left top"] > div {
+cloudflare-app[app="reading-time"][data-position="left top"] > message-container {
   border-bottom-right-radius: .1875em;
 }
 
-cloudflare-apps[app="reading-time"][data-position="left bottom"] > div {
+cloudflare-app[app="reading-time"][data-position="left bottom"] > message-container {
   border-top-right-radius: .1875em;
 }
 
-cloudflare-apps[app="reading-time"][data-position="right top"] > div {
+cloudflare-app[app="reading-time"][data-position="right top"] > message-container {
   border-bottom-left-radius: .1875em;
 }
 
-cloudflare-apps[app="reading-time"][data-position="right bottom"] > div {
+cloudflare-app[app="reading-time"][data-position="right bottom"] > message-container {
   border-top-left-radius: .1875em;
 }

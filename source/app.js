@@ -85,7 +85,7 @@
     element.setAttribute('app', 'reading-time')
     element.setAttribute('data-position', options.position)
 
-    textContainer = document.createElement('div')
+    textContainer = document.createElement('message-container')
     element.appendChild(textContainer)
 
     if (options.showBackground) textContainer.style.backgroundColor = options.backgroundColor
