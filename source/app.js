@@ -1,7 +1,6 @@
-(function() {
+(function () {
   if (!window.addEventListener) return
 
-  const d = document
   const wordsPerMinute = 250
 
   let options = INSTALL_OPTIONS
@@ -11,7 +10,7 @@
   let opacityTimeout
   let target
 
-  function getOffsetTop(element) {
+  function getOffsetTop (element) {
     let offsetTop = 0
 
     do {
@@ -22,18 +21,18 @@
     return offsetTop
   }
 
-  function getScrollPercentage(element) {
+  function getScrollPercentage (element) {
     // Consider the element's offset from the body and the portion visible from the viewport.
-    const offsetTop = getOffsetTop(element) - d.documentElement.clientHeight
+    const offsetTop = getOffsetTop(element) - document.documentElement.clientHeight
     // Consider if the element is beyond the viewport.
-    const currentY = Math.max(d.body.scrollTop - offsetTop, 0)
+    const currentY = Math.max(document.body.scrollTop - offsetTop, 0)
     const scrollPercentage = currentY / (element.scrollHeight || element.clientHeight)
 
     // Consider if the body is scrolled beyond the element.
     return Math.min(scrollPercentage, 1)
   }
 
-  function getTextEstimates(text, percentageRead) {
+  function getTextEstimates (text, percentageRead) {
     const spaces = text.match(/\s+/g)
     const wordCount = spaces ? spaces.length : 0
     const minutes = wordCount / wordsPerMinute * (1 - percentageRead)
@@ -41,12 +40,12 @@
     return {minutes, wordCount}
   }
 
-  function render() {
+  function render () {
     clearTimeout(opacityTimeout)
 
     element.style.opacity = 1
 
-    if (options.visibleDuration !== "-1") {
+    if (options.visibleDuration !== '-1') {
       opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, +options.visibleDuration)
     }
 
@@ -56,10 +55,10 @@
 
     if (!strings || !options.localize) {
       strings = {
-        finished: "",
-        lessThanAMinute: "A few seconds left",
-        oneMinute: "1 minute left",
-        manyMinutes: "$MINUTES minutes left"
+        finished: '',
+        lessThanAMinute: 'A few seconds left',
+        oneMinute: '1 minute left',
+        manyMinutes: '$MINUTES minutes left'
       }
     }
 
@@ -68,76 +67,75 @@
 
     if (minutes === 0) {
       template = strings.finished
-    }
-    else if (wordCount < wordsPerMinute || minutes < 1) {
+    } else if (wordCount < wordsPerMinute || minutes < 1) {
       template = strings.lessThanAMinute
-    }
-    else {
+    } else {
       template = roundedMinutes === 1 ? strings.oneMinute : strings.manyMinutes
     }
 
     if (template) {
       textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes)
-    }
-    else {
+    } else {
       element.style.opacity = 0
     }
   }
 
-  function updateElement() {
-    if (element && element.parentNode) element.parentNode.removeChild(element)
+  function updateElement () {
+    element = INSTALL.createElement(element, element)
+    element.setAttribute('app', 'reading-time')
+    element.setAttribute('data-position', options.position)
 
-    element = d.createElement("eager-app")
-    element.className = "eager-reading-time"
-    element.setAttribute("data-position", options.position)
-
-    textContainer = d.createElement("div")
+    textContainer = document.createElement('div')
     element.appendChild(textContainer)
 
     if (options.showBackground) textContainer.style.backgroundColor = options.backgroundColor
 
-    d.body.appendChild(element)
+    document.body.appendChild(element)
 
     observer && observer.disconnect()
-    window.removeEventListener("scroll", render)
-    window.removeEventListener("resize", render)
+    window.removeEventListener('scroll', render)
+    window.removeEventListener('resize', render)
   }
 
-  function update() {
+  function bootstrap () {
     updateElement()
 
     const selector = options.advancedOptions && options.advancedOptions.element
 
     if (selector && options.advancedOptionsToggle) {
-      target = d.querySelector(selector)
+      target = document.querySelector(selector)
 
       if (!target) {
         // Target is not yet in the DOM and is most likely being rendered with JS.
         observer && observer.disconnect()
 
-        observer = new MutationObserver(() => d.querySelector(selector) && update())
+        observer = new window.MutationObserver(() => document.querySelector(selector) && bootstrap())
 
-        return observer.observe(d.body, {childList: true})
+        return observer.observe(document.body, {childList: true})
       }
-    }
-    else {
+    } else {
       target = document.body
     }
 
-    window.addEventListener("scroll", render)
-    window.addEventListener("resize", render)
-  }
-
-  function setOptions(nextOptions) {
-    options = nextOptions
-    update()
+    window.addEventListener('scroll', render)
+    window.addEventListener('resize', render)
   }
 
   // Since we're adding an element to the body, we need to wait until the DOM is
   // ready before inserting our widget.
-  d.readyState === "loading" ? d.addEventListener("DOMContentLoaded", update) : update()
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrap)
+  } else {
+    bootstrap()
+  }
 
   // This is used by the preview to enable live updating of the app while previewing.
-  // See the preview.handlers section of the install.json file to see where it's used.
-  window.EagerReadingTime = {setOptions}
+  // See the preview.handlers section of the install.json file to see where it's usedocument.
+  window.INSTALL_SCOPE = {
+    setOptions (nextOptions) {
+      options = nextOptions
+      bootstrap()
+    }
+  }
 }())
