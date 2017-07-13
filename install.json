@@ -124,6 +124,14 @@
             "type": "string",
             "format": "selector",
             "default": "body"
+          },
+          "wordsPerMinute": {
+            "title": "Words per minute",
+            "description": "Adjust this if your site's language can be read at a different pace.",
+            "order": 1,
+            "minimum": 1,
+            "default": 250,
+            "type": "number"
           }
         }
       }

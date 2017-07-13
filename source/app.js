@@ -1,7 +1,7 @@
+import countable from 'countable'
+
 (function () {
   if (!window.addEventListener) return
-
-  const wordsPerMinute = 250
 
   let options = INSTALL_OPTIONS
   let element
@@ -32,12 +32,11 @@
     return Math.min(scrollPercentage, 1)
   }
 
-  function getTextEstimates (text, percentageRead) {
-    const spaces = text.match(/\s+/g)
-    const wordCount = spaces ? spaces.length : 0
-    const minutes = wordCount / wordsPerMinute * (1 - percentageRead)
-
-    return {minutes, wordCount}
+  function getTextEstimates (element, percentageRead, next) {
+    countable.once(element, ({words}) => {
+      const minutes = words / options.advancedOptions.wordsPerMinute * (1 - percentageRead)
+      next({minutes, wordCount: words})
+    })
   }
 
   function render () {
@@ -49,35 +48,37 @@
       opacityTimeout = setTimeout(() => { element.style.opacity = 0 }, +options.visibleDuration)
     }
 
-    const {minutes, wordCount} = getTextEstimates(target.textContent, getScrollPercentage(target))
+    function renderTemplate ({minutes, wordCount}) {
+      let {strings} = options
 
-    let {strings} = options
+      if (!strings || !options.localize) {
+        strings = {
+          finished: '',
+          lessThanAMinute: 'A few seconds left',
+          oneMinute: '1 minute left',
+          manyMinutes: '$MINUTES minutes left'
+        }
+      }
 
-    if (!strings || !options.localize) {
-      strings = {
-        finished: '',
-        lessThanAMinute: 'A few seconds left',
-        oneMinute: '1 minute left',
-        manyMinutes: '$MINUTES minutes left'
+      const roundedMinutes = Math.round(minutes)
+      let template
+
+      if (minutes === 0) {
+        template = strings.finished
+      } else if (wordCount < options.advancedOptions.wordsPerMinute || minutes < 1) {
+        template = strings.lessThanAMinute
+      } else {
+        template = roundedMinutes === 1 ? strings.oneMinute : strings.manyMinutes
+      }
+
+      if (template) {
+        textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes)
+      } else {
+        element.style.opacity = 0
       }
     }
 
-    const roundedMinutes = Math.round(minutes)
-    let template
-
-    if (minutes === 0) {
-      template = strings.finished
-    } else if (wordCount < wordsPerMinute || minutes < 1) {
-      template = strings.lessThanAMinute
-    } else {
-      template = roundedMinutes === 1 ? strings.oneMinute : strings.manyMinutes
-    }
-
-    if (template) {
-      textContainer.innerHTML = template.replace(/\$MINUTES/g, roundedMinutes)
-    } else {
-      element.style.opacity = 0
-    }
+    getTextEstimates(target, getScrollPercentage(target), renderTemplate)
   }
 
   function updateElement () {
